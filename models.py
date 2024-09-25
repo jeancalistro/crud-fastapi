@@ -5,5 +5,5 @@ class Aluno(Base):
     __tablename__ = "alunos"
 
     id = Column(Integer, primary_key=True)
-    username = Column(String, unique=True, index=True)
-    email = Column(String, unique=True, index=True)
+    name = Column(String, unique=True)
+    email = Column(String, unique=True)

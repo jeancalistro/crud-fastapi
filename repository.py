@@ -1,32 +1,37 @@
 from sqlalchemy.orm import Session
 import models, schemas
 
-def get_aluno(aluno_id : int, session_db : Session):
-    return session_db.query(models.Aluno).filter(models.Aluno.id == aluno_id).first()
+class Aluno_Repository():
 
-def get_alunos(limit : int, session_db : Session):
-    return session_db.query(models.Aluno).limit(limit).all()
+    def __init__(self, session : Session):
+        self.session = session
 
-def create_aluno(aluno : schemas.Create_Aluno, session_db : Session):
-    db_aluno = models.Aluno(username=aluno.username, email=aluno.email)
-    session_db.add(db_aluno)
-    session_db.commit()
-    return db_aluno
+    def read_aluno(self, aluno_id : int):
+        return self.session.query(models.Aluno).filter(models.Aluno.id == aluno_id).first()
 
-def update_aluno(aluno_id : int, new_aluno_data : schemas.Update_Aluno, session_db : Session):
-    db_aluno = session_db.query(models.Aluno).filter(models.Aluno.id == aluno_id).first()
-    if(db_aluno):
-        if(db_aluno.username):
-            db_aluno.username = new_aluno_data.username
-        if(db_aluno.email):
-            db_aluno.email = new_aluno_data.email
-        session_db.add(db_aluno)
-        session_db.commit()
-    return db_aluno
+    def read_alunos(self, limit : int):
+        return self.session.query(models.Aluno).limit(limit).all()
 
-def remove_aluno(aluno_id : int, session_db : Session):
-    db_aluno = session_db.query(models.Aluno).filter(models.Aluno.id == aluno_id).first()
-    if(db_aluno):
-        session_db.delete(db_aluno)
-        session_db.commit()
-    return db_aluno
+    def add_aluno(self, aluno : schemas.Create_Aluno):
+        db_aluno = models.Aluno(name=aluno.name, email=aluno.email)
+        self.session.add(db_aluno)
+        self.session.commit()
+        return db_aluno
+
+    def update_aluno(self, aluno_id : int, new_aluno_data : schemas.Update_Aluno):
+        db_aluno = self.session.query(models.Aluno).filter(models.Aluno.id == aluno_id).first()
+        if(db_aluno):
+            if(db_aluno.name):
+                db_aluno.name = new_aluno_data.name
+            if(db_aluno.email):
+                db_aluno.email = new_aluno_data.email
+            self.session.add(db_aluno)
+            self.session.commit()
+        return db_aluno
+
+    def delete_aluno(self, aluno_id : int):
+        db_aluno = self.session.query(models.Aluno).filter(models.Aluno.id == aluno_id).first()
+        if(db_aluno):
+            self.session.delete(db_aluno)
+            self.session.commit()
+        return db_aluno
