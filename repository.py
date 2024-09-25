@@ -6,8 +6,11 @@ class Aluno_Repository():
     def __init__(self, session : Session):
         self.session = session
 
-    def read_aluno(self, aluno_id : int):
+    def read_aluno_by_id(self, aluno_id : int):
         return self.session.query(models.Aluno).filter(models.Aluno.id == aluno_id).first()
+
+    def read_aluno_by_email(self, email : str):
+        return self.session.query(models.Aluno).filter(models.Aluno.email == email).first()
 
     def read_alunos(self, limit : int):
         return self.session.query(models.Aluno).limit(limit).all()
