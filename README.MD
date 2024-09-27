@@ -11,6 +11,14 @@
 * SQLAlchemy
 * JWT
 
+## Instalação de Bibliotecas
+
+`pip install -r requirements.txt`
+
+## Inicializar API
+
+`fastapi run main.py`
+
 ## Camadas
 
 * Controllers
