@@ -32,3 +32,6 @@ class From_Token(Aluno):
 class Auth_Aluno(Aluno):
     email: str
     password: str
+
+class Token(Aluno):
+    token: str

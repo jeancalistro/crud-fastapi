@@ -3,6 +3,14 @@
 
 ## API para controle de alunos
 
+## Requisitos
+
+* Python
+* FastAPI
+* PostgresSQL
+* SQLAlchemy
+* JWT
+
 ## Camadas
 
 * Controllers

@@ -6,13 +6,17 @@ from services import Aluno_Service
 import models, schemas, exceptions, utils
 
 models.Base.metadata.create_all(bind=engine)
+
 app = FastAPI()
+
 
 def get_repository(session : Session = Depends(get_db)):
     return Aluno_Repository(session)
 
+
 def get_service(repository : Aluno_Repository = Depends(get_repository)):
     return Aluno_Service(repository)
+
 
 def get_token(request : Request):
     try:
@@ -67,7 +71,7 @@ def delete(aluno_service : Aluno_Service = Depends(get_service), aluno_from_toke
         raise HTTPException(status_code = exception.error_code, detail = exception.__str__())
 
 
-@app.post("/auth")
+@app.post("/auth", status_code = 200, response_model = schemas.Token)
 def login(aluno_data : schemas.Auth_Aluno, aluno_service : Aluno_Service = Depends(get_service)):
     try:
         return {"token" : aluno_service.auth_aluno(aluno_data)}
