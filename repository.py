@@ -12,11 +12,11 @@ class Aluno_Repository():
     def read_aluno_by_email(self, email : str):
         return self.session.query(models.Aluno).filter(models.Aluno.email == email).first()
 
-    def read_alunos(self, limit : int):
-        return self.session.query(models.Aluno).limit(limit).all()
+    def read_alunos(self):
+        return self.session.query(models.Aluno).all()
 
     def add_aluno(self, aluno : schemas.Create_Aluno):
-        db_aluno = models.Aluno(name=aluno.name, email=aluno.email)
+        db_aluno = models.Aluno(name=aluno.name, email=aluno.email, password_hash=aluno.password)
         self.session.add(db_aluno)
         self.session.commit()
         return db_aluno
