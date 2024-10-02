@@ -36,8 +36,9 @@ class Aluno_Service():
     def update_aluno(self, aluno_from_token : schemas.From_Token, new_data : schemas.Update_Aluno):
         aluno_db = self.get_aluno(aluno_from_token)
         
-        if(self.exists(email = str(new_data.email))):
-            raise exceptions.Email_Already_Registered()
+        if(aluno_db.email != new_data.email):
+            if(self.exists(email = new_data.email)):
+                raise exceptions.Email_Already_Registered()
         
         new_data.password = utils.hash_password(new_data.password)
         return self.aluno_repository.update_aluno(aluno_db.id, new_data)

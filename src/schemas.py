@@ -13,7 +13,6 @@ class Update_Aluno(Aluno):
     name: str
     email: str
     password : str
-    pass
 
 class Response_Aluno(Aluno):
     id: int
