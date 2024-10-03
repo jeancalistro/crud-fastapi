@@ -1,0 +1,28 @@
+services:
+  db:
+    image: postgres
+    container_name: db
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - '5432:5432'
+    networks:
+      - network-api
+  api:
+    build: .
+    depends_on:
+      db:
+        condition: service_healthy
+        restart: true
+    container_name: api
+    environment:
+      DB_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_DOMAIN_NAME}/${POSTGRES_DB}
+    ports:
+      - '80:8000'
+    networks:
+      - network-api
+networks:
+  network-api:
+    driver: bridge
