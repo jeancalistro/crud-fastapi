@@ -5,19 +5,26 @@
 
 ## Requisitos
 
+* Docker
+
+## Tecnologias
+
 * Python
 * FastAPI
 * PostgresSQL
 * SQLAlchemy
 * JWT
 
-## Instalação de Bibliotecas
+## Variáveis de Ambiente
 
-`pip install -r requirements.txt`
+* POSTGRES_DB
+* POSTGRES_USER
+* POSTGRES_PASSWORD
+* POSTGRES_DOMAIN_NAME
 
 ## Inicializar API
 
-`fastapi run main.py`
+`docker compose up -d`
 
 ## Camadas
 
@@ -28,6 +35,7 @@
 * Schemas
 * Utils
 * Database
+* Tests
 
 ## Rotas
 
