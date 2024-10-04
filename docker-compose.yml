@@ -2,6 +2,11 @@ services:
   db:
     image: postgres
     container_name: ${POSTGRES_DOMAIN_NAME}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_DB: ${POSTGRES_DB}
@@ -15,7 +20,7 @@ services:
     depends_on:
       db:
         condition: service_healthy
-        restart: true
+    restart: always
     container_name: api
     environment:
       DB_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_DOMAIN_NAME}/${POSTGRES_DB}
