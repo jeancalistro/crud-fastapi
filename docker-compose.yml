@@ -20,6 +20,7 @@ services:
     depends_on:
       db:
         condition: service_healthy
+    restart: always
     container_name: api
     environment:
       DB_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_DOMAIN_NAME},${POSTGRES_PORT}/${POSTGRES_DB}

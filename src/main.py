@@ -1,4 +1,4 @@
-from fastapi import Depends, FastAPI, HTTPException, Request
+from fastapi import Depends, FastAPI, HTTPException
 from sqlalchemy.orm import Session
 from database import engine, get_db
 from repository import Aluno_Repository
@@ -16,18 +16,9 @@ def get_repository(session : Session = Depends(get_db)):
 
 def get_service(repository : Aluno_Repository = Depends(get_repository)):
     return Aluno_Service(repository)
-
-
-def get_token(request : Request):
-    try:
-        token : str = request.headers["Authorization"]
-        if(token):
-            return token.replace("Bearer ", "")
-    except:
-        pass
     
 
-def valid_token(token : str = Depends(get_token)):
+def valid_token(token : str = Depends(utils.get_token)):
     try:
         return utils.verify_token(token)
     except exceptions.Invalid_Token as exception:

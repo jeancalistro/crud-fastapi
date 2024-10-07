@@ -2,6 +2,7 @@ from passlib.context import CryptContext
 import jwt
 from exceptions import Invalid_Token
 from datetime import datetime, timedelta, timezone
+from fastapi import Request
 
 secret_key = "55029740726cf6845643b86e86519f995658289718794c4465605bed42d5ed38"
 algorithm = "HS256"
@@ -28,3 +29,11 @@ def verify_token(token):
         return jwt.decode(token, key=secret_key, algorithms=[algorithm])
     except Exception as exception:
         raise Invalid_Token()
+    
+def get_token(request : Request):
+    try:
+        token : str = request.headers["Authorization"]
+        if(token):
+            return token.replace("Bearer ", "")
+    except:
+        pass
