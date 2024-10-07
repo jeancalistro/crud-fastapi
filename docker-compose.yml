@@ -3,7 +3,7 @@ services:
     image: postgres
     container_name: ${POSTGRES_DOMAIN_NAME}
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
       interval: 5s
       timeout: 5s
       retries: 5
@@ -12,7 +12,7 @@ services:
       POSTGRES_DB: ${POSTGRES_DB}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     ports:
-      - '5432:5432'
+      - '${POSTGRES_PORT}:5432'
     networks:
       - network-api
   api:
@@ -22,9 +22,9 @@ services:
         condition: service_healthy
     container_name: api
     environment:
-      DB_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_DOMAIN_NAME}/${POSTGRES_DB}
+      DB_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_DOMAIN_NAME},${POSTGRES_PORT}/${POSTGRES_DB}
     ports:
-      - '80:8000'
+      - '${API_PORT}:8000'
     networks:
       - network-api
 networks:
