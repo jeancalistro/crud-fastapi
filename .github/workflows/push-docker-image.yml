@@ -11,6 +11,15 @@ jobs:
         uses: actions/checkout@v4
       - name: build image
         run: docker build . -t jeancalistro/alunos-api:${{ github.run_id }}
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@0.20.0
+        with:
+          image-ref: jeancalistro/alunos-api:${{ github.run_id }}
+          format: table
+          exit-code: 1
+          ignore-unfixed: true
+          vuln-type: os,library
+          severity: CRITICAL,HIGH
       - name: push image to docker hub
         run: |
           docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }}
