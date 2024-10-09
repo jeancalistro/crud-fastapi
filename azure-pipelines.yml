@@ -1,0 +1,23 @@
+trigger:
+- dev
+
+pool:
+  vmImage: ubuntu-latest
+
+stages:
+  - stage: CI
+    displayName: 'Pipeline - CI'
+    jobs:
+      - job: BuildAndPush
+        displayName: 'Build and push image to docker hub'
+        steps:
+          - task: Docker@2
+            inputs:
+              containerRegistry: 'DockerHub'
+              repository: 'jeancalistro/alunos-api-dev'
+              command: 'buildAndPush'
+              Dockerfile: './Dockerfile'
+              buildContext: './'
+              tags: |
+                $(Build.BuildId)
+                latest
