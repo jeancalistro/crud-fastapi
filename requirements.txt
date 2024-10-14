@@ -1,6 +1,6 @@
 fastapi[standard]
 sqlalchemy
-psycopg2-binary
+psycopg2
 passlib
 PyJWT
 python-dotenv
