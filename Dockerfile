@@ -4,7 +4,7 @@ WORKDIR /usr/src/crud
 
 RUN apk update
 
-RUN apk add postgresql-dev gcc python3-dev musl-dev
+RUN apk add postgresql-dev gcc musl-dev
 
 COPY ./requirements.txt /usr/src/crud/requirements.txt
 
