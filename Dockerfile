@@ -1,4 +1,4 @@
-FROM python:alpine
+FROM python:alpine3.19
 
 WORKDIR /usr/src/crud
 
