@@ -2,9 +2,13 @@ FROM python:alpine3.19
 
 WORKDIR /usr/src/crud
 
-RUN apk update
-
-RUN apk add postgresql-dev gcc musl-dev
+RUN apk update && apk add --no-cache \
+    gcc \
+    libc-dev \
+    libffi-dev \
+    musl-dev \
+    python3-dev \
+    postgresql-dev
 
 COPY ./requirements.txt /usr/src/crud/requirements.txt
 
