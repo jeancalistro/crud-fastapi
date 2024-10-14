@@ -12,7 +12,8 @@ RUN apk update && apk add --no-cache \
 
 COPY ./requirements.txt /usr/src/crud/requirements.txt
 
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --upgrade pip && \
+    pip install --no-cache-dir -r requirements.txt
 
 COPY ./src /usr/src/crud
 
